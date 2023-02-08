@@ -18,6 +18,9 @@ runs:
   steps:
   - uses: actions/checkout@v3
   
+  - name: Setup MSBuild
+    uses: microsoft/setup-msbuild@v1
+    
   - name: Setup Nuget
     uses: NuGet/setup-nuget@v1.1.1
     
@@ -36,12 +39,8 @@ runs:
     run: dotnet nuget add source --username ${{ inputs.User }} --password ${{ inputs.Token }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/Aligned-Vision-Group-Engineering/index.json"
     shell: bash
     
-#  - name: Add Nuget.org
-#    run: dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
-#    shell: bash    
-
+    
   - name: Restore dependencies
-#    run: nuget restore ${{ inputs.SolutionName }}
     run: nuget restore $SolutionName
     shell: bash
     
