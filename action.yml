@@ -71,11 +71,16 @@ runs:
 #  - name: Build       
 #    run: dotnet build ${{ inputs.SolutionName }} --configuration ${{ inputs.BuildSolutionType }} --no-restore
 #    shell: bash
+  - name: Upload artifact
+    uses: actions/upload-artifact@v1.0.0
+    with:
+      name: inputs.SolutionName
+      path: "./_build"
     
-  - name: Pack
-    id: PackForNuget
-    run: dotnet pack --configuration ${{ inputs.BuildSolutionType }}
-    shell: bash
+#  - name: Pack
+#    id: PackForNuget
+#    run: dotnet pack --configuration ${{ inputs.BuildSolutionType }}
+#    shell: bash
 
  # - name: Find nupkg
   #  id: FindNugetPackage
