@@ -75,7 +75,8 @@ runs:
     uses: actions/upload-artifact@v1.0.0
     with:
       name: inputs.SolutionName
-      path: "./_build"
+      path: bin\Release\Publish
+ #     path: "./_build"
     
 #  - name: Pack
 #    id: PackForNuget
