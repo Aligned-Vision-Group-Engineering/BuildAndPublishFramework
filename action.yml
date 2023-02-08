@@ -4,6 +4,9 @@ inputs:
   SolutionName: 
     description: 'Name of the Solution'
     required: true
+  SolutionNameWithExtension:
+    description: 'Name of the solution with extension'
+    required: true
   BuildSolutionType:
     desciption: 'Build Configuration switch.'
     default: 'Release'
@@ -15,14 +18,7 @@ inputs:
 runs:
   using: "composite"
   
-  steps:
-  - name: EchoUsefulInformation
-    run:
-      echo "SolutionName is ${{ inputs.SolutionName }}"
-      echo "BuildSolutionType is ${{ inputs.BuildSolutionType }}"
-      echo "userName is ${{ inputs.User }}"
-    shell: bash
-      
+  steps:     
       
   - uses: actions/checkout@v3
   
@@ -53,7 +49,7 @@ runs:
 #    run: |
 #      msbuild.exe EzRep.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
 #      msbuild ${{ inputs.SolutionName }} /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
-    run: msbuild.exe ${{ inputs.SolutionName }} //p:Configuration=Release //p:DeployOnBuild=true //p:PublishProfile=FolderProfile
+    run: msbuild.exe ${{ inputs.SolutionNameWithExtension }} //p:Configuration=Release //p:DeployOnBuild=true //p:PublishProfile=FolderProfile
   #  run: msbuild.exe ${{ inputs.SolutionName }} //nologo //nr:false //p:DeployOnBuild=true //p:DeployDefaultTarget=WebPublish //p:WebPublishMethod=FileSystem //p:DeleteExistingFiles=True //p:platform="Any CPU" //p:configuration="Release" //p:PublishUrl="..\_build"
     shell: bash
     
@@ -75,8 +71,8 @@ runs:
     uses: actions/upload-artifact@v1.0.0
     with:
       name: inputs.SolutionName
-    #  path: "${{ inputs.SolutionName }}bin\Release\Publish"
-      path: bin\Release\Publish
+      path: "${{ inputs.SolutionName }}bin\Release\Publish"
+     # path: bin\Release\Publish
  #     path: "./_build"
     
 #  - name: Pack
