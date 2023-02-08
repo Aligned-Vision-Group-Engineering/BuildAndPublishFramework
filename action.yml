@@ -26,9 +26,11 @@ runs:
     
   - name: Navigate to Workspace
     run: cd $GITHUB_WORKSPACE
+    shell: bash
     
   - name: Create Build Directory
     run: mkdir _build
+    shell: bash
     
   - name: Add organization nuget feed
     run: dotnet nuget add source --username ${{ inputs.User }} --password ${{ inputs.Token }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/Aligned-Vision-Group-Engineering/index.json"
@@ -42,7 +44,7 @@ runs:
   - name: Build Solution
     run: |
       msbuild.exe EzRep.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
-        
+    shell: bash
     
 #  - name: Clean
 #    #run: dotnet clean ${{ inputs.SolutionName }}
