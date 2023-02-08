@@ -1,0 +1,67 @@
+name: BuildAndPublish
+description: 'Build a .NET project and publish the .nupkg to the feed'
+inputs:
+  SolutionName: 
+    description: 'Name of the Solution'
+    required: true
+  BuildSolutionType:
+    desciption: 'Build Configuration switch.'
+    default: 'Release'
+  User:
+    description: 'UserName'
+  Token:
+    description: 'NugetToken'
+
+runs:
+  using: "composite"
+  
+  steps:
+  - uses: actions/checkout@v3
+  
+  - name: Setup Nuget
+    uses: NuGet/setup-nuget@v1.1.1
+    
+  - name: Clean
+    #run: dotnet clean ${{ inputs.SolutionName }}
+    run: dotnet clean && dotnet nuget locals all --clear
+    shell: bash
+     
+  - name: Setup .NET
+    uses: actions/setup-dotnet@v3.0.3
+    with:
+      dotnet-version: 5.0.x
+      #dotnet-version: 2.0.3
+    
+  - name: Add organization nuget feed
+    run: dotnet nuget add source --username ${{ inputs.User }} --password ${{ inputs.Token }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/Aligned-Vision-Group-Engineering/index.json"
+    shell: bash
+    
+#  - name: Add Nuget.org
+#    run: dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
+#    shell: bash    
+
+  - name: Restore dependencies
+#    run: nuget restore ${{ inputs.SolutionName }}
+    run: nuget restore $SolutionName
+    shell: bash
+    
+  - name: Build
+    run: dotnet build ${{ inputs.SolutionName }} --configuration ${{ inputs.BuildSolutionType }} --no-restore
+    shell: bash
+    
+  - name: Pack
+    id: PackForNuget
+    run: dotnet pack --configuration ${{ inputs.BuildSolutionType }}
+    shell: bash
+
+ # - name: Find nupkg
+  #  id: FindNugetPackage
+   # uses: DovnarAlexander/github-action-file-detection@master
+    #with:
+     # wildcard: '*.nupkg'
+
+  - name: Put To Nuget - from found nupkg
+    #run: dotnet nuget push "${{ steps.FindNugetPackage.outputs.found }}" --source github
+    run: dotnet nuget push **\*.nupkg --source github
+#    run: dotnet nuget push "${{ steps.FindNugetPackage.outputs.found }}" --api-key ${{ inputs.Token }} --source github
+    shell: bash
