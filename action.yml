@@ -38,7 +38,8 @@ runs:
     
     
   - name: Restore dependencies
-    run: nuget restore ${{ inputs.SolutionName }}
+    run: nuget restore
+    #run: nuget restore ${{ inputs.SolutionName }}
     shell: bash
     
   - name: Build Solution
