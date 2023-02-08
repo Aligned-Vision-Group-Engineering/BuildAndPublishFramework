@@ -16,6 +16,14 @@ runs:
   using: "composite"
   
   steps:
+  - name: EchoUsefulInformation
+    run:
+      echo "SolutionName:"
+      echo SolutionName
+      echo "BuildSolutionType:"
+      echo BuildSolutionType
+      
+      
   - uses: actions/checkout@v3
   
   - name: Setup MSBuild
