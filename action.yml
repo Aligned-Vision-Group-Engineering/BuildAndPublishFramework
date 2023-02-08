@@ -53,7 +53,8 @@ runs:
 #    run: |
 #      msbuild.exe EzRep.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
 #      msbuild ${{ inputs.SolutionName }} /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
-    run: msbuild.exe ${{ inputs.SolutionName }} //p:Configuration=Release //p:DeployOnBuild=true //p:PublishProfile=FolderProfile
+    run: msbuild.exe ${{ inputs.SolutionName }} //p:Configuration=Release
+   # run: msbuild.exe ${{ inputs.SolutionName }} //p:Configuration=Release //p:DeployOnBuild=true //p:PublishProfile=FolderProfile
   #  run: msbuild.exe ${{ inputs.SolutionName }} //nologo //nr:false //p:DeployOnBuild=true //p:DeployDefaultTarget=WebPublish //p:WebPublishMethod=FileSystem //p:DeleteExistingFiles=True //p:platform="Any CPU" //p:configuration="Release" //p:PublishUrl="..\_build"
     shell: bash
     
