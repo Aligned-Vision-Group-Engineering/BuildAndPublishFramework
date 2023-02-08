@@ -1,5 +1,5 @@
 name: BuildAndPublish
-description: 'Build a .NET project and publish the .nupkg to the feed'
+description: 'Build a .NET Framework project and publish the .nupkg to the feed'
 inputs:
   SolutionName: 
     description: 'Name of the Solution'
