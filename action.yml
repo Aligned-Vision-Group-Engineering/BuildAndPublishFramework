@@ -37,9 +37,9 @@ runs:
     shell: bash
     
     
-  - name: Restore dependencies
-    run: nuget restore ${{ inputs.SolutionName }}
-    shell: bash
+#  - name: Restore dependencies
+#    run: nuget restore ${{ inputs.SolutionName }}
+#    shell: bash
     
   - name: Build Solution
 #    run: |
