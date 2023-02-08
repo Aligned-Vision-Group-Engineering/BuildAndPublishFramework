@@ -19,7 +19,8 @@ runs:
   - name: EchoUsefulInformation
     run:
       echo "SolutionName is ${{ inputs.SolutionName }}"
-     # echo $"BuildSolutionType: {{ inputs.BuildSolutionType }}"
+      echo "BuildSolutionType is ${{ inputs.BuildSolutionType }}"
+      echo "userName is ${{ inputs.User }}"
     shell: bash
       
       
