@@ -18,8 +18,8 @@ runs:
   steps:
   - name: EchoUsefulInformation
     run:
-      echo $"SolutionName: {{ inputs.SolutionName }}"
-      echo $"BuildSolutionType: {{ inputs.BuildSolutionType }}"
+      echo "SolutionName: $inputs.SolutionName"
+     # echo $"BuildSolutionType: {{ inputs.BuildSolutionType }}"
     shell: bash
       
       
