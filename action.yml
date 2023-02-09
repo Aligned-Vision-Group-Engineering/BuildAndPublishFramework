@@ -64,6 +64,12 @@ runs:
 #      dotnet-version: 5.0.x
 #      #dotnet-version: 2.0.3
     
+    
+  - name: Pack
+    id: PackForNuget
+    run: dotnet pack --configuration ${{ inputs.BuildSolutionType }}
+    shell: bash
+
 #  - name: Build       
 #    run: dotnet build ${{ inputs.SolutionName }} --configuration ${{ inputs.BuildSolutionType }} --no-restore
 #    shell: bash
@@ -75,10 +81,6 @@ runs:
      # path: bin\Release\Publish
  #     path: "./_build"
     
-#  - name: Pack
-#    id: PackForNuget
-#    run: dotnet pack --configuration ${{ inputs.BuildSolutionType }}
-#    shell: bash
 
  # - name: Find nupkg
   #  id: FindNugetPackage
