@@ -4,9 +4,6 @@ inputs:
   SolutionName: 
     description: 'Name of the Solution'
     required: true
-  SolutionNameWithExtension:
-    description: 'Name of the solution with extension'
-    required: true
   BuildSolutionType:
     desciption: 'Build Configuration switch.'
     default: 'Release'
@@ -42,27 +39,13 @@ runs:
     
     
   - name: Restore dependencies
-    run: nuget restore ${{ inputs.SolutionName }}
+    run: nuget restore
     shell: bash
     
   - name: Build Solution
-#    run: |
-#      msbuild.exe EzRep.sln /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
-#      msbuild ${{ inputs.SolutionName }} /nologo /nr:false /p:DeployOnBuild=true /p:DeployDefaultTarget=WebPublish /p:WebPublishMethod=FileSystem /p:DeleteExistingFiles=True /p:platform="Any CPU" /p:configuration="Release" /p:PublishUrl="../_build"
-    run: msbuild.exe ${{ inputs.SolutionNameWithExtension }} //p:Configuration=Release //p:DeployOnBuild=true //p:PublishProfile=FolderProfile
-  #  run: msbuild.exe ${{ inputs.SolutionName }} //nologo //nr:false //p:DeployOnBuild=true //p:DeployDefaultTarget=WebPublish //p:WebPublishMethod=FileSystem //p:DeleteExistingFiles=True //p:platform="Any CPU" //p:configuration="Release" //p:PublishUrl="..\_build"
+    run: msbuild.exe ${{ inputs.SolutionName }}.sln
     shell: bash
     
-#  - name: Clean
-#    #run: dotnet clean ${{ inputs.SolutionName }}
-#    run: dotnet clean && dotnet nuget locals all --clear
-#    shell: bash
-#     
-#  - name: Setup .NET
-#    uses: actions/setup-dotnet@v3.0.3
-#    with:
-#      dotnet-version: 5.0.x
-#      #dotnet-version: 2.0.3
     
     
   - name: Pack
@@ -70,26 +53,14 @@ runs:
     run: dotnet pack --configuration ${{ inputs.BuildSolutionType }}
     shell: bash
 
-#  - name: Build       
-#    run: dotnet build ${{ inputs.SolutionName }} --configuration ${{ inputs.BuildSolutionType }} --no-restore
-#    shell: bash
   - name: Upload artifact
     uses: actions/upload-artifact@v1.0.0
     with:
       name: inputs.SolutionName
-      path: '${{ inputs.SolutionName }}\bin\Release\Publish\'
-     # path: bin\Release\Publish
- #     path: "./_build"
+      path: '${{ inputs.SolutionName }}\bin\Release\'
     
 
- # - name: Find nupkg
-  #  id: FindNugetPackage
-   # uses: DovnarAlexander/github-action-file-detection@master
-    #with:
-     # wildcard: '*.nupkg'
 
   - name: Put To Nuget - from found nupkg
-    #run: dotnet nuget push "${{ steps.FindNugetPackage.outputs.found }}" --source github
     run: dotnet nuget push **\*.nupkg --source github
-#    run: dotnet nuget push "${{ steps.FindNugetPackage.outputs.found }}" --api-key ${{ inputs.Token }} --source github
     shell: bash
