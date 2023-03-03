@@ -53,11 +53,11 @@ runs:
     run: dotnet pack --configuration ${{ inputs.BuildSolutionType }}
     shell: bash
 
-  - name: Upload artifact
-    uses: actions/upload-artifact@v1.0.0
-    with:
-      name: inputs.SolutionName
-      path: '${{ inputs.SolutionName }}\bin\Release\'
+#  - name: Upload artifact
+#    uses: actions/upload-artifact@v1.0.0
+#    with:
+#      name: inputs.SolutionName
+#      path: '${{ inputs.SolutionName }}\bin\Release\'
     
 
 
